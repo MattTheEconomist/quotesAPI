@@ -1,11 +1,15 @@
 const express = require("express");
 const app = express();
 
-const { quotes } = require("./data");
+const { quotes, otherData } = require("./data");
 const { getRandomElement } = require("./utils");
 
 quoteRouter = express.Router();
 app.use("/api/quotes", quoteRouter);
+
+otherRouter = express.Router();
+
+app.use("/api/other", otherRouter);
 
 const PORT = process.env.PORT || 4000;
 
@@ -13,6 +17,10 @@ app.use(express.static("public"));
 
 app.listen(PORT, () => {
   console.log("app is listening on port " + PORT);
+});
+
+otherRouter.get("/", (req, res, next) => {
+  res.send({ quote: otherData });
 });
 
 // app.get("/api/quotes/random", (req, res, next) => {
